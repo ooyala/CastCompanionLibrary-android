@@ -43,8 +43,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.support.v7.app.NotificationCompat;
 
 /**
  * A service to provide status bar Notifications when we are casting. For JB+ versions, notification
@@ -303,7 +303,7 @@ public class VideoCastNotificationService extends Service {
         int pauseOrPlayTextResourceId = isPlaying ? R.string.ccl_pause : R.string.ccl_play;
 
         NotificationCompat.Builder builder
-                = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                = new NotificationCompat.Builder(this, "castChannel")
                 .setSmallIcon(R.drawable.ic_stat_action_notification)
                 .setContentTitle(metadata.getString(MediaMetadata.KEY_TITLE))
                 .setContentText(castingTo)
@@ -315,7 +315,7 @@ public class VideoCastNotificationService extends Service {
                 .addAction(R.drawable.ic_notification_disconnect_24dp,
                         getString(R.string.ccl_disconnect),
                         stopPendingIntent)
-                .setStyle(new NotificationCompat.MediaStyle()
+                .setStyle(new android.support.v4.media.app.NotificationCompat.MediaStyle()
                         .setShowActionsInCompactView(0, 1)
                         .setMediaSession(mCastManager.getMediaSessionCompatToken()))
                 .setOngoing(true)
